@@ -91,9 +91,10 @@ export async function updateInvoice(
         WHERE id = ${id}
     `;
     } catch (error) {
+        console.log(error)
         return { message: 'Database Error: Failed to Update Invoice.' };
     }
-    
+
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
 }

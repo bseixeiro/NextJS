@@ -7,6 +7,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
+      console.log("Auth User : ", auth?.user)
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
       if (isOnDashboard) {
         if (isLoggedIn) return true;
@@ -16,6 +17,16 @@ export const authConfig = {
       }
       return true;
     },
+    session: async ({session, user}) => {
+      if (session.user) {
+        session.user.id = "test";
+        session.user.role = "admin";
+      }
+      console.log("Session: ", session)
+      console.log("User: ", user)
+      return session;
+    },
+    
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
